@@ -8,12 +8,19 @@ namespace CopyDirTaskOs
 
         public static BackgroundWorker Worker = new();
 
+
         public void DeepCopy(DirectoryInfo directory, string destinationPath)
         {
+            int pre = Directory.EnumerateFileSystemEntries(destinationPath, "*", SearchOption.AllDirectories).Count();
             foreach (string dir in Directory.GetDirectories(directory.FullName, "*", SearchOption.AllDirectories))
             {
                 string dirToCreate = dir.Replace(directory.FullName, destinationPath);
                 Directory.CreateDirectory(dirToCreate);
+
+
+                Worker.ReportProgress((Directory.EnumerateFileSystemEntries(destinationPath, "*", SearchOption.AllDirectories).Count() - pre) * 100 /
+                                     (Directory.EnumerateFileSystemEntries(directory.FullName, "*", SearchOption.AllDirectories).Count() )) ;
+
             }
 
             foreach (string CurrentFile in Directory.GetFiles(directory.FullName, "*.*", SearchOption.AllDirectories))
@@ -21,12 +28,12 @@ namespace CopyDirTaskOs
                 File.Copy(CurrentFile, CurrentFile.Replace(directory.FullName, destinationPath), true);
 
 
-                Worker.ReportProgress(Directory.EnumerateFileSystemEntries(directory.FullName).Count() /
-                                      Directory.EnumerateFileSystemEntries(destinationPath).Count() * 100);
+                Worker.ReportProgress((Directory.EnumerateFileSystemEntries(destinationPath, "*", SearchOption.AllDirectories).Count() - pre) * 100 /
+                                     Directory.EnumerateFileSystemEntries(directory.FullName, "*", SearchOption.AllDirectories).Count());
 
-
-                /*Worker.ReportProgress((Directory.GetDirectories(directory.FullName).Length + Directory.GetFiles(destinationPath).Length) / (Directory.GetDirectories(directory.FullName).Length + Directory.GetFiles(directory.FullName).Length) * 100);*/
             }
+            MessageBox.Show("copied");
+            Worker.ReportProgress(0);
 
         }
 
@@ -55,8 +62,8 @@ namespace CopyDirTaskOs
         private void sourceDirBtn_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog sfd = new();
-            
-            
+
+
             if (sfd.ShowDialog() == DialogResult.OK)
             {
                 sourcePathtxt.Text = sfd.SelectedPath;
