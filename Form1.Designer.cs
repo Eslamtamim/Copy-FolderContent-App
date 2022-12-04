@@ -37,6 +37,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.progressNum = new System.Windows.Forms.Label();
+            this.typeList = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // Copybtn
@@ -72,7 +73,7 @@
             // 
             // sourceDirBtn
             // 
-            this.sourceDirBtn.Location = new System.Drawing.Point(484, 42);
+            this.sourceDirBtn.Location = new System.Drawing.Point(480, 40);
             this.sourceDirBtn.Name = "sourceDirBtn";
             this.sourceDirBtn.Size = new System.Drawing.Size(33, 29);
             this.sourceDirBtn.TabIndex = 4;
@@ -82,7 +83,7 @@
             // 
             // destinationPathBtn
             // 
-            this.destinationPathBtn.Location = new System.Drawing.Point(484, 116);
+            this.destinationPathBtn.Location = new System.Drawing.Point(484, 114);
             this.destinationPathBtn.Name = "destinationPathBtn";
             this.destinationPathBtn.Size = new System.Drawing.Size(33, 29);
             this.destinationPathBtn.TabIndex = 5;
@@ -117,11 +118,21 @@
             this.progressNum.TabIndex = 8;
             this.progressNum.Text = "0%";
             // 
+            // typeList
+            // 
+            this.typeList.FormattingEnabled = true;
+            this.typeList.Location = new System.Drawing.Point(12, 260);
+            this.typeList.Name = "typeList";
+            this.typeList.Size = new System.Drawing.Size(151, 28);
+            this.typeList.TabIndex = 9;
+            this.typeList.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(529, 310);
+            this.Controls.Add(this.typeList);
             this.Controls.Add(this.progressNum);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -149,5 +160,6 @@
         private Label label1;
         private Label label2;
         private Label progressNum;
+        private ComboBox typeList;
     }
 }
